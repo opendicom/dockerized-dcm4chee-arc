@@ -1,7 +1,7 @@
 version: "3"
 services:
   ldap:
-    image: dcm4che/slapd-dcm4chee:2.4.44-17.0
+    image: opendicom/slapd-for-dcm4chee:5.17.0
     ports:
       - "389:389"
       - "636:636"
@@ -12,16 +12,19 @@ services:
       - /var/local/dcm4chee-arc/ldap:/var/lib/ldap
       - /var/local/dcm4chee-arc/slapd.d:/etc/ldap/slapd.d
   db:
-    image: dcm4che/postgres-dcm4chee:11.2-17
+    image: opendicom/mariadb-for-dcm4chee:5.17.0
     ports:
-      - "5432:5432"
+      - "3306:3306"
+      - "4567:4567"
+      - "4568:4568"
+      - "4444:4444"
     env_file: docker-compose.env
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - /var/local/dcm4chee-arc/db:/var/lib/postgresql/data
   arc:
-    image: dcm4che/dcm4chee-arc-psql:5.17.0
+    image: opendicom/dcm4chee-arc:5.17.0
     ports:
       - "8080:8080"
       - "8443:8443"
@@ -35,7 +38,7 @@ services:
       WILDFLY_ADMIN_USER: admin
       WILDFLY_ADMIN_PASSWORD: admin
       WILDFLY_CHOWN: /opt/wildfly/standalone /storage
-      WILDFLY_WAIT_FOR: ldap:389 db:5432
+      WILDFLY_WAIT_FOR: ldap:389 db:3306
       JAVA_OPTS: -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -agentlib:jdwp=transport=dt_socket,address=*:8787,server=y,suspend=n
     depends_on:
       - ldap
