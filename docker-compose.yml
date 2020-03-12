@@ -1,7 +1,8 @@
 version: "3"
 services:
   ldap:
-    image: opendicom/slapd-for-dcm4chee:5.17.0
+    restart: unless-stopped
+    image: opendicom/slapd-for-dcm4chee:5.21.0
     ports:
       - "389:389"
       - "636:636"
@@ -12,7 +13,8 @@ services:
       - /var/local/dcm4chee-arc/ldap:/var/lib/ldap
       - /var/local/dcm4chee-arc/slapd.d:/etc/ldap/slapd.d
   db:
-    image: opendicom/mariadb-for-dcm4chee:5.17.0
+    restart: unless-stopped
+    image: opendicom/mariadb-for-dcm4chee:5.21.0
     ports:
       - "3306:3306"
       - "4567:4567"
@@ -24,7 +26,8 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /var/local/dcm4chee-arc/db:/var/lib/mysql
   arc:
-    image: opendicom/dcm4chee-arc:5.17.0
+    restart: unless-stopped
+    image: opendicom/dcm4chee-arc:5.21.0
     ports:
       - "8080:8080"
       - "8443:8443"
