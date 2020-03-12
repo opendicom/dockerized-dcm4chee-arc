@@ -18,7 +18,7 @@ RUN cd $JBOSS_HOME \
 
 # download mysql java connector
 ENV MYSQL_CONNECTOR mysql-connector-java-5.1.36
-RUN curl -L https://downloads.mysql.com/archives/get/file/${MYSQL_CONNECTOR}.tar.gz | tar xz \
+RUN curl -L https://downloads.mysql.com/archives/get/p/3/file/${MYSQL_CONNECTOR}.tar.gz | tar xz \
     && mv ${MYSQL_CONNECTOR}/${MYSQL_CONNECTOR}-bin.jar $JBOSS_HOME/modules/com/mysql/main/
 
 # download mysql-specific file
