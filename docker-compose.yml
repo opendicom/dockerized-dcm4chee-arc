@@ -16,12 +16,9 @@ services:
       - /var/local/dcm4chee-arc/slapd.d:/etc/openldap/slapd.d      
   db:
     restart: unless-stopped
-    image: opendicom/mariadb-for-dcm4chee:5.21.0
+    image: opendicom/mysql-for-dcm4chee:5.21.0
     ports:
-      - "3306:3306"
-      - "4567:4567"
-      - "4568:4568"
-      - "4444:4444"
+      - "3306:3306"      
     env_file: docker-compose.env
     volumes:
       - /etc/localtime:/etc/localtime:ro
