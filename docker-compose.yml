@@ -7,11 +7,7 @@ services:
       - "389:389"
       - "636:636"
     env_file: docker-compose.env
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - /var/local/dcm4chee-arc/ldap:/var/lib/ldap
-      - /var/local/dcm4chee-arc/slapd.d:/etc/ldap/slapd.d
+    volumes:      
       - /var/local/dcm4chee-arc/ldap:/var/lib/openldap/openldap-data
       - /var/local/dcm4chee-arc/slapd.d:/etc/openldap/slapd.d      
   db:
@@ -20,9 +16,7 @@ services:
     ports:
       - "3306:3306"      
     env_file: docker-compose.env
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
+    volumes:      
       - /var/local/dcm4chee-arc/db:/var/lib/mysql
   arc:
     restart: unless-stopped
@@ -45,8 +39,6 @@ services:
     depends_on:
       - ldap
       - db
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
+    volumes:      
       - /var/local/dcm4chee-arc/wildfly:/opt/wildfly/standalone
       - /var/local/dcm4chee-arc/storage:/storage
